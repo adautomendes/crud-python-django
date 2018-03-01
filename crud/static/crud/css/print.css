@@ -1,0 +1,15 @@
+* {
+	font-family: Arial, Helvetica, sans-serif;
+	font-size: 11pt;
+}
+
+body, #content, #container {
+	width: 100%;
+	margin: 0;
+	float: none;
+	background: #fff;
+}
+
+.titulo .dados {
+	position: relative;
+}

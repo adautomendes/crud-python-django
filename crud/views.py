@@ -33,8 +33,10 @@ def ajax_spec_edit(request):
 def spec_delete(request):
     return render(request, 'crud/spec_index.html')
 def ajax_spec_delete(request):
+    id = request.POST.get('id', None)
+
     specs_json = serializers.serialize('json', Specialization.objects.all())
-    return HttpResponse(specs_json, content_type='application/json')
+    return HttpResponse(id, content_type='application/json')
 
 #Character
 def char_list_all(request):
