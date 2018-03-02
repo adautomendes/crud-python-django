@@ -6,13 +6,13 @@
 <head>
     <meta charset="utf-8">
     <title>Specializations</title>
-    
+
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.100.2/css/materialize.min.css">
     <link type="text/css" rel="stylesheet" href="{% static "crud/css/style.css" %}" media="screen,projection,print" />
     <link type="text/css" rel="stylesheet" href="{% static "crud/css/menu.css" %}" media="screen,projection,print" />
 
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.100.2/js/materialize.min.js"></script>
     <script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.100.2/js/materialize.min.js"></script>
 
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
@@ -22,6 +22,7 @@
 </head>
 
 <body>
+    <div id="overlay"></div>
     {% include 'crud/header.html' %}
     <main>
         <div class="container">
@@ -47,22 +48,17 @@
 </body>
 
 <script type="text/javascript">
-    $(document).ready(function () {
+    $(document).ajaxStart(function(){$("#overlay").show();});
+    $(document).ajaxComplete(function(){$("#overlay").hide();});
+
+    $(document).ready(function() {
         $.ajax({
             url: '/crud/ajax/specialization',
             dataType: 'json',
-            success: function (data) {
-                $.each(data, function () {
-                    $("#table-spec > tbody").append(`<tr>` +
-                        `<td>` + this.pk + `</td>` +
-                        `<td><b>` + this.fields.name + `</b></td>` +
-                        `<td>` + this.fields.initial_life + `</td>` +
-                        `<td>` + this.fields.initial_mana + `</td>` +
-                        `<td><a href="/crud/specialization/edit/` + this.pk + `"><img class="responsive-img lista-img" src="{% static "crud/img/edit.png" %}"/><br></a></td>` +
-                        `<td><a href="#" onclick="remove(` + this.pk + `)"><img class="responsive-img lista-img" src="{% static "crud/img/delete.png" %}"/><br></a></td>` +
-                        `</tr>`);
-                })
-            }, complete: function (data) {
+            success: function(data) {
+                populateTable(data);
+            },
+            complete: function(data) {
 
             }
         });
@@ -76,16 +72,31 @@
                 "id": id
             },
             dataType: 'json',
-            error: function (data) {
-                alert(JSON.stringify(data));
+            error: function(data) {
+                alert('Opss...an error occured.');
             },
-            success: function (data) {
+            success: function(data) {
                 alert('Successfully deleted!');
+                populateTable(data);
             },
-            complete: function (data) {
+            complete: function(data) {
 
             }
         });
+    }
+
+    function populateTable(data) {
+        $("#table-spec > tbody").empty();
+        $.each(data, function() {
+            $("#table-spec > tbody").append(`<tr>` +
+                `<td>` + this.pk + `</td>` +
+                `<td><b>` + this.fields.name + `</b></td>` +
+                `<td>` + this.fields.initial_life + `</td>` +
+                `<td>` + this.fields.initial_mana + `</td>` +
+                `<td><a href="/crud/specialization/edit/` + this.pk + `"><img class="responsive-img lista-img" src="{% static "crud/img/edit.png" %}"/><br></a></td>` +
+                `<td><a href="#" onclick="remove(` + this.pk + `)"><img class="responsive-img lista-img" src="{% static "crud/img/delete.png" %}"/><br></a></td>` +
+                `</tr>`);
+        })
     }
 </script>
 
