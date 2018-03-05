@@ -5,7 +5,7 @@
 
 <head>
     <meta charset="utf-8">
-    <title>Specializations</title>
+    <title>Specialization</title>
 
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.100.2/css/materialize.min.css">
     <link type="text/css" rel="stylesheet" href="{% static "crud/css/style.css" %}" media="screen,projection,print" />
@@ -27,185 +27,50 @@
     {% include 'crud/header.html' %}
     <main>
         <div class="container">
-            <!--
-			<div class="row">
-				<div class="col s12 m3 l3">
-					<button class="btn waves-effect waves-light" target="_blank" onclick="window.location.href='/planos/'">Início</button>
-				</div>
-				<div class="col s12 m3 l3">
-					<button class="btn waves-effect waves-light" target="_blank" onclick="window.location.href='/planos/listar/'">Ver planos salvos</button>
-				</div>
-			</div>
-			-->
             <div class="row">
                 <form class="col s12 m12 l12" method="POST">
                     <div class="row">
                         <div class="input-field col s12 m6 l6">
-                            <i class="material-icons prefix">label</i>
-                            <select id="curso" name="curso" required>
-								<option value="" disabled selected>Selecione...</option>
-							</select>
-                            <label>Curso</label>
+                            <i class="material-icons prefix">forward</i>
+                            <input type="text" id="pk" name="pk" readonly="readonly">
+                            <label for="pk">ID</label>
                         </div>
-
                         <div class="input-field col s12 m6 l6">
-                            <i class="material-icons prefix">label</i>
-                            <select id="estrutura" name="estrutura" required>
-								<option value="" disabled selected>Selecione...</option>
-							</select>
-                            <label>Estrutura</label>
+                            <i class="material-icons prefix">forward</i>
+                            <input type="text" id="name" name="name" class="validate">
+                            <label for="name">Name</label>
                         </div>
                     </div>
-
                     <div class="row">
+                        <!-- Specialization -->
                         <div class="input-field col s12 m12 l12">
-                            <i class="material-icons prefix">label</i>
-                            <select id="disciplina" name="disciplina" required>
-								<option value="" disabled selected>Selecione...</option>
-							</select>
-                            <label>Disciplina</label>
-                        </div>
-                    </div>
-
-                    <div class="row">
-                        <div class="input-field col s12 m6 l6">
-                            <i class="material-icons prefix">label</i>
-                            <input type="text" id="modalidade" name="modalidade" class="validate" readonly="readonly">
-                            <label for="modalidade">Modalidade</label>
-                        </div>
-                        <div id="col-periodo" class="input-field col s12 m6 l6">
-                            <i class="material-icons prefix">label</i>
-                            <input type="text" id="periodo" name="periodo" class="validate" readonly="readonly">
-                            <label for="periodo">Período</label>
-                        </div>
-                    </div>
-
-                    <div class="row">
-                        <div class="input-field col s12 m6 l4">
-                            <i class="material-icons prefix">label</i>
-                            <select id="turma" name="turma" required>
-                                <option value="" disabled>Selecione...</option>
-                                <option value="Única" selected>Única</option>
-                                <option value="A">A</option>
-                                <option value="B">B</option>
+                            <i class="material-icons prefix">forward</i>
+                            <select id="specialization" name="specialization" required>
+                                <option value="" disabled selected>Selecione...</option>
                             </select>
-                            <label>Turma</label>
-                        </div>
-                        <div class="input-field col s12 m6 l4">
-                            <i class="material-icons prefix">label</i>
-                            <select id="anosem" name="anosem" required>
-                                <option value="" disabled>Selecione...</option>
-                                <option value="2016/1">2016/1</option>
-                                <option value="2016/2">2016/2</option>
-                                <option value="2017/1">2017/1</option>
-                                <option value="2017/2" selected>2017/2</option>
-                                <option value="2018/1">2018/1</option>
-                                <option value="2018/2">2018/2</option>
-                                <option value="2019/1">2019/1</option>
-                                <option value="2019/2">2019/2</option>
-                            </select>
-                            <label>Ano/Semestre</label>
-                        </div>
-                    </div>
-
-                    <div class="row">
-                        <div class="input-field col s12 m6 l4">
-                            <i class="material-icons prefix">label</i>
-                            <input type="number" id="chTotal" name="chTotal" class="validate" readonly="readonly" required>
-                            <label for="chTotal">CH Total</label>
-                        </div>
-                        <div class="input-field col s12 m6 l4">
-                            <i class="material-icons prefix">label</i>
-                            <input type="number" id="chSemanal" name="chSemanal" class="validate" readonly="readonly" required>
-                            <label for="chSemanal">CH Semanal</label>
-                        </div>
-                    </div>
-
-                    <div class="row">
-                        <div class="input-field col s12 m12 l12">
-                            <i class="material-icons prefix">label</i>
-                            <input type="text" id="professor" name="professor" class="validate" required>
-                            <label for="professor">Professor</label>
-                        </div>
-                    </div>
-
-                    <div class="row">
-                        <div class="input-field col s12 m12 l12">
-                            <i class="material-icons prefix">comment</i>
-                            <textarea class="materialize-textarea validade" id="ementa" name="ementa" required readonly="readonly"></textarea>
-                            <label for="ementa">Ementa</label>
-                        </div>
-                    </div>
-
-                    <div class="row">
-                        <div class="input-field col s12 m12 l12">
-                            <i class="material-icons prefix">comment</i>
-                            <textarea class="materialize-textarea validade" id="objGeral" name="objGeral"></textarea>
-                            <label for="objGeral">Objetivo Geral</label>
+                            <label>Specialization</label>
                         </div>
                     </div>
                     <div class="row">
-                        <div class="input-field col s12 m12 l12">
-                            <i class="material-icons prefix">comment</i>
-                            <textarea class="materialize-textarea validade" id="objEspecifico" name="objEspecifico"></textarea>
-                            <label for="objEspecifico">Objetivo Específico</label>
+                        <div class="input-field col s12 m4 l4">
+                            <i class="material-icons prefix">forward</i>
+                            <input type="number" id="life" name="life" class="validate">
+                            <label for="life">Life</label>
+                        </div>
+                        <div class="input-field col s12 m4 l4">
+                            <i class="material-icons prefix">forward</i>
+                            <input type="number" id="mana" name="mana" class="validate">
+                            <label for="mana">Mana</label>
+                        </div>
+                        <div class="input-field col s12 m4 l4">
+                            <i class="material-icons prefix">forward</i>
+                            <input type="number" id="armor" name="armor" class="validate">
+                            <label for="armor">Armor</label>
                         </div>
                     </div>
-                    <div class="row">
-                        <div class="input-field col s12 m12 l12">
-                            <i class="material-icons prefix">comment</i>
-                            <textarea class="materialize-textarea validade" id="conteudo" name="conteudo"></textarea>
-                            <label for="conteudo">Conteúdo Programático</label>
-                        </div>
-                    </div>
-                    <div class="row">
-                        <div class="input-field col s12 m12 l12">
-                            <i class="material-icons prefix">comment</i>
-                            <textarea class="materialize-textarea validade" id="metodologia" name="metodologia"></textarea>
-                            <label for="metodologia">Metodologia</label>
-                        </div>
-                    </div>
-                    <div class="row">
-                        <div class="input-field col s12 m12 l12">
-                            <i class="material-icons prefix">comment</i>
-                            <textarea class="materialize-textarea validade" id="estApoio" name="estApoio"></textarea>
-                            <label for="estApoio">Estrutura de Apoio</label>
-                        </div>
-                    </div>
-                    <div class="row">
-                        <div class="col s12 m12 l12 clickable">
-                            Para auto preenchimento do método de avaliação, selecione o tipo de disciplina:<br/>
-                            <span id="disc-presencial">Disciplina Presencial (VA's e OAt)</span><br/>
-                            <span id="disc-ead">Disciplina à Distância (VAM's e VAP's)</span><br/>
-                            <span id="disc-pin">Projeto Integrador</span><br/>
-                            <span id="disc-tcc">Trabalho de Conclusão de Curso</span>
-                        </div>
-                        <div class="input-field col s12 m12 l12">
-                            <i class="material-icons prefix">comment</i>
-                            <textarea class="materialize-textarea validade" id="avaliacao" name="avaliacao"></textarea>
-                            <label for="avaliacao">Avaliação</label>
-                        </div>
-
-                    </div>
-                    <div class="row">
-                        <div class="input-field col s12 m12 l12">
-                            <i class="material-icons prefix">comment</i>
-                            <textarea class="materialize-textarea validade" id="bibBasica" name="bibBasica" required readonly="readonly"></textarea>
-                            <label for="bibBasica">Bibliografia Básica</label>
-                        </div>
-                    </div>
-
-                    <div class="row">
-                        <div class="input-field col s12 m12 l12">
-                            <i class="material-icons prefix">comment</i>
-                            <textarea class="materialize-textarea validade" id="bibComplementar" name="bibComplementar" required readonly="readonly"></textarea>
-                            <label for="bibComplementar">Bibliografia Complementar</label>
-                        </div>
-                    </div>
-
                     <div class="row">
                         <div class="col s12 m12 l12">
-                            <button class="btn waves-effect waves-light" type="submit" target="_blank" formaction="/planos/salvar/">Salvar</button>
+                            <button class="btn waves-effect waves-light" type="submit" target="_blank" formaction="/character/save/">Salvar</button>
                         </div>
                     </div>
                 </form>
@@ -226,9 +91,8 @@
         $('select').material_select();
 
         {% if character %}
-            carregarCombos();
-
             /* Setting fields for edit */
+            $("#pk").val(`{{ character.pk }}`);
             $("#name").val(`{{ character.name }}`);
             $("#life").val(`{{ character.life }}`);
             $("#mana").val(`{{ character.mana }}`);
@@ -239,18 +103,18 @@
             url: '/crud/ajax/specialization',
             dataType: 'json',
             success: function(data) {
-                var curso = $("#specialization");
+                var specialization = $("#specialization");
                 $.each(data, function() {
                     var spec_id = `{{ character.specialization.id }}`;
 
                     if (this.pk == spec_id) {
-                        curso.append(`<option value="`+this.pk+`" selected>` + this.fields.nome + `</option>`)
+                        specialization.append(`<option value="`+this.pk+`" selected>` + this.fields.name + `</option>`)
                     } else {
-                        curso.append(`<option value="`+this.pk+`">` + this.fields.nome + `</option>`)
+                        specialization.append(`<option value="`+this.pk+`">` + this.fields.name + `</option>`)
                     }
                 });
 
-                curso.material_select();
+                specialization.material_select();
             },
         });
     });

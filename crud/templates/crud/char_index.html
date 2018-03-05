@@ -1,0 +1,108 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <title>Characters</title>
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.100.2/css/materialize.min.css">
+    <link type="text/css" rel="stylesheet" href="{% static "crud/css/style.css" %}" media="screen,projection,print" />
+    <link type="text/css" rel="stylesheet" href="{% static "crud/css/menu.css" %}" media="screen,projection,print" />
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+
+    <script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.100.2/js/materialize.min.js"></script>
+
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+    <!-- Pace -->
+    <script type="text/javascript" src="{% static "crud/js/pace.min.js" %}"></script>
+    <link href="{% static "crud/css/pace/pace-theme-flash.css" %}" rel="stylesheet" />
+</head>
+
+<body>
+    <div id="overlay"></div>
+    {% include 'crud/header.html' %}
+    <main>
+        <div class="container">
+            <div class="row">
+                <table id="table-char" class="highlight centered responsive-table">
+                    <thead>
+                        <tr>
+                            <th>ID</th>
+                            <th>Name</th>
+                            <th>Specialization</th>
+                            <th>Life</th>
+                            <th>Mana</th>
+                            <th>Armor</th>
+                            <th>Edit</th>
+                            <th>Remove</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </main>
+    {% include 'crud/footer.html' %}
+</body>
+
+<script type="text/javascript">
+    $(document).ajaxStart(function(){$("#overlay").show();});
+    $(document).ajaxComplete(function(){$("#overlay").hide();});
+
+    $(document).ready(function() {
+        $.ajax({
+            url: '/crud/ajax/character',
+            dataType: 'json',
+            success: function(data) {
+                populateTable(data);
+            },
+            complete: function(data) {
+
+            }
+        });
+    });
+
+    function remove(id) {
+        $.ajax({
+            url: '/crud/ajax/character/delete',
+            type: "POST",
+            data: {
+                "id": id
+            },
+            dataType: 'json',
+            error: function(data) {
+                alert('Opss...an error occured.');
+            },
+            success: function(data) {
+                alert('Successfully deleted!');
+                populateTable(data);
+            },
+            complete: function(data) {
+
+            }
+        });
+    }
+
+    function populateTable(data) {
+        $("#table-char > tbody").empty();
+        $.each(data, function() {
+            $("#table-char > tbody").append(`<tr>` +
+                `<td>` + this.pk + `</td>` +
+                `<td><b>` + this.fields.name + `</b></td>` +
+                `<td><b>` + this.fields.specialization + `</b></td>` +
+                `<td>` + this.fields.life + `</td>` +
+                `<td>` + this.fields.mana + `</td>` +
+                `<td>` + this.fields.armor + `</td>` +
+                `<td><a href="/crud/character/edit/` + this.pk + `"><img class="responsive-img lista-img" src="{% static "crud/img/edit.png" %}"/></a></td>` +
+                `<td><a href="#" onclick="remove(` + this.pk + `)"><img class="responsive-img lista-img" src="{% static "crud/img/delete.png" %}"/></a></td>` +
+                `</tr>`);
+        })
+    }
+</script>
+
+</html>

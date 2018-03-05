@@ -5,7 +5,7 @@
 
 <head>
     <meta charset="utf-8">
-    <title>Specializations</title>
+    <title>Specialization</title>
 
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.100.2/css/materialize.min.css">
     <link type="text/css" rel="stylesheet" href="{% static "crud/css/style.css" %}" media="screen,projection,print" />
@@ -23,12 +23,19 @@
 </head>
 
 <body>
-    <div id="overlay"></div>
+    <!-- <div id="overlay"></div> -->
     {% include 'crud/header.html' %}
     <main>
         <div class="container">
             <div class="row">
                 <form class="col s12 m12 l12" method="POST">
+                    <div class="row">
+                        <div class="input-field col s12 m12 l12">
+                            <i class="material-icons prefix">forward</i>
+                            <input type="text" id="pk" name="pk" readonly="readonly">
+                            <label for="pk">ID</label>
+                        </div>
+                    </div>
                     <div class="row">
                         <div class="input-field col s12 m12 l12">
                             <i class="material-icons prefix">forward</i>
@@ -64,12 +71,10 @@
 
 </html>
 <script type="text/javascript">
-    $(document).ajaxStart(function(){$("#overlay").show();});
-    $(document).ajaxComplete(function(){$("#overlay").hide();}); //Investigar pq isso da problema
-
     $(document).ready(function() {
         {% if specialization %}
             /* Setting fields for edit */
+            $("#pk").val(`{{ specialization.pk }}`);
             $("#name").val(`{{ specialization.name }}`);
             $("#initial_life").val(`{{ specialization.initial_life }}`);
             $("#initial_mana").val(`{{ specialization.initial_mana }}`);

@@ -13,6 +13,7 @@ from .models import *
 #Specialization
 def spec_list_all(request):
     return render(request, 'crud/spec_index.html')
+
 def ajax_spec_list_all(request):
     specs_json = serializers.serialize('json', Specialization.objects.all())
     return HttpResponse(specs_json, content_type='application/json')
@@ -20,23 +21,28 @@ def ajax_spec_list_all(request):
 def spec_new(request):
     return render(request, 'crud/spec_form.html')
 
-def spec_edit(request):
+def spec_edit(request, spec_id):
     # Receive id from spec
     specialization = Specialization.objects.get(pk=spec_id)
     return render(request, 'crud/spec_form.html', { 'specialization' : specialization })
 
 def spec_save(request):
+    pk = request.POST.get('pk', None)
     name = request.POST.get('name', None)
     initial_life = request.POST.get('initial_life', None)
     initial_mana = request.POST.get('initial_mana', None)
 
-    specialization = Specialization(name=name, initial_life=initial_life, initial_mana=initial_mana)
-    specialization.save()
+    if pk is "": #Creating new
+        specialization = Specialization(name=name, initial_life=initial_life, initial_mana=initial_mana)
+    else: #Editing
+        specialization = Specialization(pk=pk, name=name, initial_life=initial_life, initial_mana=initial_mana)
 
+    specialization.save()
     return render(request, 'crud/spec_index.html')
 
 def spec_delete(request):
     return render(request, 'crud/spec_index.html')
+
 def ajax_spec_delete(request):
     id = request.POST.get('id', None)
     specialization = Specialization.objects.get(pk=id)
@@ -48,6 +54,7 @@ def ajax_spec_delete(request):
 #Character
 def char_list_all(request):
     return render(request, 'crud/char_index.html')
+
 def ajax_char_list_all(request):
     chars_json = serializers.serialize('json', Character.objects.all())
     return HttpResponse(chars_json, content_type='application/json')
@@ -55,15 +62,37 @@ def ajax_char_list_all(request):
 def char_new(request):
     return render(request, 'crud/char_form.html')
 
-def char_edit(request):
+def char_edit(request, char_id):
     # Receive id from char
-    return render(request, 'crud/char_form.html')
+    character = Character.objects.get(pk=char_id)
+    return render(request, 'crud/char_form.html', { 'character' : character })
 
 def char_save(request):
+    pk = request.POST.get('pk', None)
+
+    specialization_id = request.POST.get('specialization', None)
+    specialization = Specialization.objects.get(pk=specialization_id)
+
+    name = request.POST.get('name', None)
+    life = request.POST.get('life', None)
+    mana = request.POST.get('mana', None)
+    armor = request.POST.get('armor', None)
+
+    if pk is "": #Creating new
+        character = Character(specialization=specialization, name=name, life=life, mana=mana, armor=armor)
+    else: #Editing
+        character = Character(pk=pk, specialization=specialization, name=name, life=life, mana=mana, armor=armor)
+
+    character.save()
     return render(request, 'crud/char_index.html')
 
 def char_delete(request):
     return render(request, 'crud/char_index.html')
+
 def ajax_char_delete(request):
+    id = request.POST.get('id', None)
+    character = Character.objects.get(pk=id)
+    character.delete()
+
     chars_json = serializers.serialize('json', Character.objects.all())
     return HttpResponse(chars_json, content_type='application/json')

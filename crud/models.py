@@ -3,7 +3,6 @@ from __future__ import unicode_literals
 
 from django.db import models
 
-# Create your models here.
 class Specialization(models.Model):
     name = models.CharField('Name', max_length=100,null=False,blank=False)
     initial_life = models.IntegerField('Initial Life')
