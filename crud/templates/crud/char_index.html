@@ -93,11 +93,11 @@
         $.each(data, function() {
             $("#table-char > tbody").append(`<tr>` +
                 `<td>` + this.pk + `</td>` +
-                `<td><b>` + this.fields.name + `</b></td>` +
-                `<td><b>` + this.fields.specialization + `</b></td>` +
-                `<td>` + this.fields.life + `</td>` +
-                `<td>` + this.fields.mana + `</td>` +
-                `<td>` + this.fields.armor + `</td>` +
+                `<td><b>` + this.name + `</b></td>` +
+                `<td><b>` + this.specialization__name + `</b></td>` +
+                `<td>` + this.life + `</td>` +
+                `<td>` + this.mana + `</td>` +
+                `<td>` + this.armor + `</td>` +
                 `<td><a href="/crud/character/edit/` + this.pk + `"><img class="responsive-img lista-img" src="{% static "crud/img/edit.png" %}"/></a></td>` +
                 `<td><a href="#" onclick="remove(` + this.pk + `)"><img class="responsive-img lista-img" src="{% static "crud/img/delete.png" %}"/></a></td>` +
                 `</tr>`);

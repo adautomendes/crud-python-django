@@ -56,7 +56,10 @@ def char_list_all(request):
     return render(request, 'crud/char_index.html')
 
 def ajax_char_list_all(request):
-    chars_json = serializers.serialize('json', Character.objects.all())
+    chars = Character.objects.all().values('pk', 'name', 'specialization__name', 'life', 'mana', 'armor')
+    chars_dict = ValuesQuerySetToDict(chars) #Tricky
+    chars_json = json.dumps(chars_dict)
+
     return HttpResponse(chars_json, content_type='application/json')
 
 def char_new(request):
@@ -96,3 +99,7 @@ def ajax_char_delete(request):
 
     chars_json = serializers.serialize('json', Character.objects.all())
     return HttpResponse(chars_json, content_type='application/json')
+
+#Utils methods
+def ValuesQuerySetToDict(vqs): #Converting ValuesQuerySet to Dict, it allows to convert Dict to jSon after
+    return [item for item in vqs]
